@@ -1,19 +1,36 @@
-import React, { useState } from "react";
 import Button from "../Button/Button";
-
+import { useSelector, useDispatch } from "react-redux"
 const Counter = () => {
     
-    const [count, setCount] = useState(0);
-
+    const count = useSelector(state => state)
+    console.log(count)
+    const dispatch = useDispatch();
+    
     const handleSubtract = () => {
-        setCount(count - 1);
+        dispatch(({
+            type: "SUBTRACT",
+        }))
     };
+
     const handleReset = () => {
-        setCount(0);
+        dispatch({
+            type: "RESET",
+        })
     };
+
     const handleAdd = () => {
-        setCount(count + 1);
+        dispatch({
+            type: "ADD"
+        })
     };
+
+    const handleAddNumber = (amount) => {
+        dispatch({
+            type: "ADD_NUMBER",
+            payload: amount
+        })
+    }
+
 
     let color = "#fff";
     if (count >= 1) {
@@ -56,6 +73,11 @@ const Counter = () => {
                 onClick={handleAdd}
                 btnClass={"--btn-success"}
             >{`+ Add`}</Button>
+    
+            <Button
+                onClick={() => handleAddNumber(5)}
+                btnClass={"--btn-success"}
+            >{`Add 5`}</Button>
             </div>
         </div>
         </section>

@@ -1,4 +1,4 @@
-import { storeCreator } from "redux";
+import { createStore } from "redux";
 
 // ! 2) Reducer
 const countReducer = (state = 0, action) => {
@@ -12,11 +12,16 @@ const countReducer = (state = 0, action) => {
         return (state = 0);
     }
 
+    /* using payload property in dispatch*/
+    if (action.type === "ADD_NUMBER") {
+        return (state + action.payload);
+    }
+
     return state;
 };
 
 // ! 1) create a store
-const store = storeCreator(
+const store = createStore(
     countReducer,
     window._REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION()
 );
