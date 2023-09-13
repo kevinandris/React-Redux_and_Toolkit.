@@ -27,6 +27,7 @@ const Counter = () => {
     return (
         <section className="counter-sec --flex-center">
         <div className="container counter --card --center-all ">
+            <button className="--btn --btn-danger">Log Out</button>
             <h1 className="--text-light">React Counter App</h1>
             <p
             className="count --my2 --text-md --text-light --fw-bold"
