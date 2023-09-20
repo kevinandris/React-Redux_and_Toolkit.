@@ -1,0 +1,7 @@
+export const ACTIONS = {
+  SUBTRACT: "SUBTRACT",
+  RESET: "RESET",
+  ADD: "ADD",
+  ADD_FIVE: "ADD_FIVE",
+  TOGGLE_AUTH: "TOGGLE_AUTH",
+};

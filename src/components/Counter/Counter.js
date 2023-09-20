@@ -1,87 +1,77 @@
 import Button from "../Button/Button";
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
+import {
+  handleSubtract,
+  handleAdd,
+  handleReset,
+  handleAddFive,
+  toggleAuth,
+} from "../../store/actions/action";
 const Counter = () => {
-    
-    const count = useSelector(state => state)
-    console.log(count)
-    const dispatch = useDispatch();
-    
-    const handleSubtract = () => {
-        dispatch(({
-            type: "SUBTRACT",
-        }))
-    };
+  const count = useSelector((state) => state.count);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  // console.log(count);
+  // console.log(isLoggedIn);
+  const dispatch = useDispatch();
 
-    const handleReset = () => {
-        dispatch({
-            type: "RESET",
-        })
-    };
+  let color = "#fff";
+  if (count >= 1) {
+    color = "yellow";
+  } else if (count < 0) {
+    color = "red";
+  } else {
+    color = "white";
+  }
 
-    const handleAdd = () => {
-        dispatch({
-            type: "ADD"
-        })
-    };
+  return (
+    <section className="counter-sec --flex-center" data-testid="counter1">
+      <div className="container counter --card --center-all ">
+        <button
+          className="--btn --btn-danger"
+          onClick={() => dispatch(toggleAuth())}
+        >
+          {isLoggedIn ? "Log out" : "Log in"}
+        </button>
 
-    const handleAddNumber = (amount) => {
-        dispatch({
-            type: "ADD_NUMBER",
-            payload: amount
-        })
-    }
-
-
-    let color = "#fff";
-    if (count >= 1) {
-        color = "yellow";
-    } else if (count < 0) {
-        color = "red";
-    } else {
-        color = "white";
-    }
-
-    return (
-        <section className="counter-sec --flex-center">
-        <div className="container counter --card --center-all ">
-            <button className="--btn --btn-danger">Log Out</button>
+        {!isLoggedIn ? (
+          <p>Please Log in</p>
+        ) : (
+          <>
             <h1 className="--text-light">React Counter App</h1>
+
             <p
-            className="count --my2 --text-md --text-light --fw-bold"
-            style={{ color: color }}
+              className="count --my2 --text-md --text-light --fw-bold"
+              style={{ color: color }}
             >
-            {count}
+              {count}
             </p>
+
             <div className="buttons">
-            {/* <button className="--btn --btn-danger" onClick={handleSubtract}>
-            - Subtract
-            </button> */}
-            <Button
-                onClick={handleSubtract}
+              <Button
                 btnClass={"--btn-danger"}
-            >{`- Subtract`}</Button>
+                onClick={() => dispatch(handleSubtract())}
+              >{`- Subtract`}</Button>
 
-            {/* <button className="--btn" onClick={handleReset}>
-            ! Reset
-            </button> */}
-            <Button onClick={handleReset} btnClass={null}>{`! Reset`}</Button>
+              <Button
+                btnClass={null}
+                onClick={() => dispatch(handleReset())}
+              >{`! Reset`}</Button>
 
-            {/* <button className="--btn --btn-success" onClick={handleAdd}>
-            + Add
-            </button> */}
-            <Button
-                onClick={handleAdd}
+              <Button
                 btnClass={"--btn-success"}
-            >{`+ Add`}</Button>
-    
-            <Button
-                onClick={() => handleAddNumber(5)}
+                onClick={() => dispatch(handleAdd())}
+              >{`+ Add`}</Button>
+
+              <Button
                 btnClass={"--btn-success"}
-            >{`Add 5`}</Button>
+                onClick={() => dispatch(handleAddFive(5))}
+              >{` + Add 5`}</Button>
             </div>
-        </div>
-        </section>
-    );
+          </>
+        )}
+      </div>
+    </section>
+  );
 };
 
 export default Counter;

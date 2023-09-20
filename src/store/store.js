@@ -1,29 +1,18 @@
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
+import countReducer from "./reducers/countReducer";
+import authReducer from "./reducers/authReducer";
 
 // ! 2) Reducer
-const countReducer = (state = 0, action) => {
-    if (action.type === "SUBTRACT") {
-        return state - 1;
-    }
-    if (action.type === "ADD") {
-        return state + 1;
-    }
-    if (action.type === "RESET") {
-        return (state = 0);
-    }
-
-    /* using payload property in dispatch*/
-    if (action.type === "ADD_NUMBER") {
-        return (state + action.payload);
-    }
-
-    return state;
-};
+// ! Combined reducers (We need this because the store from redux could only accept 1 function)
+const reducers = combineReducers({
+  count: countReducer,
+  isLoggedIn: authReducer,
+});
 
 // ! 1) create a store
 const store = createStore(
-    countReducer,
-    window._REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION()
+  reducers,
+  window._REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION() // ! got this from redux page on Github
 );
 
 export default store;
