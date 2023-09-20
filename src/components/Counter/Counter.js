@@ -1,15 +1,11 @@
 import Button from "../Button/Button";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  handleSubtract,
-  handleAdd,
-  handleReset,
-  handleAddFive,
-  toggleAuth,
-} from "../../store/actions/action";
+import { ADD, ADD_FIVE, SUBTRACT, RESET } from "../../store/slice/counterSlice";
+import { TOGGLE_AUTH } from "../../store/slice/authSlice";
+
 const Counter = () => {
-  const count = useSelector((state) => state.count);
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const count = useSelector((state) => state.counter.count);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   // console.log(count);
   // console.log(isLoggedIn);
   const dispatch = useDispatch();
@@ -28,7 +24,7 @@ const Counter = () => {
       <div className="container counter --card --center-all ">
         <button
           className="--btn --btn-danger"
-          onClick={() => dispatch(toggleAuth())}
+          onClick={() => dispatch(TOGGLE_AUTH())}
         >
           {isLoggedIn ? "Log out" : "Log in"}
         </button>
@@ -49,22 +45,22 @@ const Counter = () => {
             <div className="buttons">
               <Button
                 btnClass={"--btn-danger"}
-                onClick={() => dispatch(handleSubtract())}
+                onClick={() => dispatch(SUBTRACT())}
               >{`- Subtract`}</Button>
 
               <Button
                 btnClass={null}
-                onClick={() => dispatch(handleReset())}
+                onClick={() => dispatch(RESET())}
               >{`! Reset`}</Button>
 
               <Button
                 btnClass={"--btn-success"}
-                onClick={() => dispatch(handleAdd())}
+                onClick={() => dispatch(ADD())}
               >{`+ Add`}</Button>
 
               <Button
                 btnClass={"--btn-success"}
-                onClick={() => dispatch(handleAddFive(5))}
+                onClick={() => dispatch(ADD_FIVE(5))}
               >{` + Add 5`}</Button>
             </div>
           </>
